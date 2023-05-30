@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/register.css" />
+    <title>Detalhes dos Funcionários</title>
+  </head>
+  <body>
+    <!-- Incluindo a navbar -->
+    <%- include('partials/navbar') %>
+
+    <h1>Cadastro de Funcionário</h1>
+    <form action="/employees/cadastro" method="POST" class="container">
+      <label for="name">Nome:</label>
+      <input type="text" id="name" name="name" required />
+      <label for="hoursWorked">Horas trabalhadas:</label>
+      <input type="text" id="hoursWorked" name="hoursWorked" required />
+
+      <label for="shift">Turno:</label>
+      <select id="shift" name="shift" required>
+        <option value="M">Manhã</option>
+        <option value="V">Tarde</option>
+        <option value="N">Noite</option>
+      </select>
+
+      <label for="category">Categoria:</label>
+      <select id="category" name="category" required>
+        <option value="G">Gerente</option>
+        <option value="F">Funcionário</option>
+      </select>
+
+      <input type="submit" value="Cadastrar" />
+    </form>
+  </body>
+</html>
