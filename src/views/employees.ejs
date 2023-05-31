@@ -21,17 +21,22 @@
           <th>Número de Horas Trabalhadas</th>
           <th>Turno</th>
           <th>Categoria</th>
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
         <% employees.forEach((employee) => { %>
-        <tr>
-          <td><%= employee.code %></td>
-          <td><%= employee.name %></td>
-          <td><%= employee.hoursWorked %></td>
-          <td><%= employee.shift %></td>
-          <td><%= employee.category %></td>
-        </tr>
+          <tr>
+            <td><%= employee.code %></td>
+            <td><%= employee.name %></td>
+            <td><%= employee.hoursWorked %></td>
+            <td><%= employee.shift %></td>
+            <td><%= employee.category %></td>
+            <td>
+              <a href="/employees/id/<%= employee.code %>">Editar</a>
+              <a href="#" onclick="deleteEmployee('<%= employee.code %>')">Excluir</a>
+            </td>
+          </tr>
         <% }) %>
       </tbody>
     </table>
@@ -39,4 +44,24 @@
     <p>Nenhum funcionário encontrado.</p>
     <% } %>
   </body>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    function deleteEmployee(code) {
+      if (confirm("Deseja realmente excluir este funcionário?")) {
+        axios.delete("/employees/id/" + code)
+          .then(response => {
+            // Manipular a resposta do servidor, se necessário
+            console.log(response);
+            // Redirecionar para uma página ou atualizar a tabela, por exemplo
+            window.location.href = "/employees";
+          })
+          .catch(error => {
+            // Lidar com erros, se houver
+            console.error(error);
+            window.location.href = "/employees";
+          });
+      }
+    }
+  </script>
 </html>

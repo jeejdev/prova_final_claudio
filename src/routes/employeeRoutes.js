@@ -16,10 +16,10 @@ router.get('/cadastro', (req, res, next) => {
 // Rota para criar um novo funcionário
 router.post('/cadastro', employeeController.createEmployee);
 
-/* // Rota para atualizar um funcionário
-router.put('/:code', employeeController.updateEmployee); */
+// Rota para atualizar um funcionário
+router.put('/id/:code', employeeController.updateEmployee);
 
-/* // Rota para excluir um funcionário
-router.delete('/:code', employeeController.deleteEmployee); */
+// Rota para excluir um funcionário
+router.delete('/id/:code', employeeController.deleteEmployee);
 
 module.exports = router;

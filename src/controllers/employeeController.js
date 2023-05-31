@@ -38,14 +38,15 @@ exports.getAllEmployees = async (req, res) => {
 exports.getEmployeeByCode = async (req, res) => {
   try {
     const { code } = req.params
+
     const employee = await Employee.findOne({
       where: { code },
     })
-
+    console.log('Empregado', employee)
     if (employee) {
-      res.render("employee", { employee })
+      res.render("editEmployee", { employee })
     } else {
-      res.render("employee", { employee })
+      res.render("editEmployee", { employee })
     }
   } catch (error) {
     console.error("Erro ao obter o funcionário:", error)
@@ -57,6 +58,7 @@ exports.getEmployeeByCode = async (req, res) => {
 exports.updateEmployee = async (req, res) => {
   try {
     const { code } = req.params
+
     const { hoursWorked, shift, category } = req.body
 
     const employee = await Employee.findOne({
@@ -90,7 +92,7 @@ exports.deleteEmployee = async (req, res) => {
 
     if (employee) {
       await employee.destroy()
-      res.send("Funcionário excluído com sucesso")
+      res.redirect("/employees")
     } else {
       res.status(404).send("Funcionário não encontrado")
     }
