@@ -59,7 +59,7 @@ exports.updateEmployee = async (req, res) => {
   try {
     const { code } = req.params
 
-    const { hoursWorked, shift, category } = req.body
+    const { name, hoursWorked, shift, category } = req.body
 
     const employee = await Employee.findOne({
       where: { code },
@@ -67,12 +67,13 @@ exports.updateEmployee = async (req, res) => {
 
     if (employee) {
       // Atualizar os campos necessários do funcionário
+      employee.name = name
       employee.hoursWorked = hoursWorked
       employee.shift = shift
       employee.category = category
 
       await employee.save()
-      res.send(employee)
+      res.redirect("/employees")
     } else {
       res.status(404).send("Funcionário não encontrado")
     }

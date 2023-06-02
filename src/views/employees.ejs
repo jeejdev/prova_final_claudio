@@ -43,9 +43,12 @@
     <% } else { %>
     <p>Nenhum funcionário encontrado.</p>
     <% } %>
+
+    <!--DEFINE O AXIOS-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
   </body>
 
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
     function deleteEmployee(code) {
       if (confirm("Deseja realmente excluir este funcionário?")) {

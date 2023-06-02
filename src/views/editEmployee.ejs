@@ -11,63 +11,63 @@
     <%- include('partials/navbar') %>
 
     <h1>Atualizar Funcionário - ID <%= employee.code %></h1>
-    <form class="container" method="POST" enctype="multipart/form-data" onsubmit="event.preventDefault(); updateEmployee('<%= employee.code %>');">
-      <input type="hidden" name="_method" value="PUT">
+    <form class="container" id="updateEmployeeForm" method="POST">
       <label for="name">Nome:</label>
       <input type="text" id="name" name="name" value="<%= employee.name %>" required />
-    
+
       <label for="hoursWorked">Horas trabalhadas:</label>
       <input type="text" id="hoursWorked" name="hoursWorked" value="<%= employee.hoursWorked %>" required />
-    
+
       <label for="shift">Turno:</label>
       <select id="shift" name="shift" required>
         <option value="M" <% if (employee.shift === 'M') { %>selected<% } %>>Manhã</option>
         <option value="V" <% if (employee.shift === 'V') { %>selected<% } %>>Tarde</option>
         <option value="N" <% if (employee.shift === 'N') { %>selected<% } %>>Noite</option>
       </select>
-    
+
       <label for="category">Categoria:</label>
       <select id="category" name="category" required>
         <option value="G" <% if (employee.category === 'G') { %>selected<% } %>>Gerente</option>
         <option value="F" <% if (employee.category === 'F') { %>selected<% } %>>Funcionário</option>
       </select>
-    
-      <input type="submit" value="Atualizar" onclick="updateEmployee()" />
+
+      <input type="submit" value="Atualizar" />
     </form>
-    
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-      function updateEmployee(code) {
-        if (confirm("Deseja realmente atualizar este funcionário?")) {
-          const name = document.getElementById("name").value;
-          const hoursWorked = document.getElementById("hoursWorked").value;
-          const shift = document.getElementById("shift").value;
-          const category = document.getElementById("category").value;
+      const form = document.getElementById('updateEmployeeForm');
+    
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+    
+        const code = '<%= employee.code %>';
+        const name = document.getElementById('name').value;
+        const hoursWorked = document.getElementById('hoursWorked').value;
+        const shift = document.getElementById('shift').value;
+        const category = document.getElementById('category').value;
 
-          const data = {
-            name: name,
-            hoursWorked: hoursWorked,
-            shift: shift,
-            category: category
-          };
+        const link = `/employees/id/${code}`;
 
-          axios
-            .put("/employees/id/" + code, data)
-            .then(response => {
-              console.log('No front', data)
-              // Manipular a resposta do servidor, se necessário
-/*               console.log(response); */
-              // Redirecionar para uma página ou atualizar a tabela, por exemplo
-/*               window.location.href = "/employees"; */
-            })
-            .catch(error => {
-              // Lidar com erros, se houver
-              console.error(error);
-/*               window.location.href = "/employees"; */
-            });
-        }
-      }
+try {
+  await axios.put(link, {
+    name,
+    hoursWorked,
+    shift,
+    category,
+  }, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  window.location.href = '/employees';
+} catch (error) {
+  // POR ALGUM MOTIVO MESMO AO REALIZAR A ATUALIZAÇÃO COM SUCESSO, ACESSANDO O ENDPOINT, ESTÁ VINDO PARA O FRONTEND COMO ERRO, ENTÃO ESTOU REDIRECIONANDO DE QUALQUER MANEIRA PARA A PÁGINA CORRETA.
+  console.error('Erro ao atualizar o funcionário:', error);
+  window.location.href = '/employees';
+}
+      });
     </script>
+    
   </body>
 </html>
