@@ -14,7 +14,7 @@ exports.createEmployee = async (req, res) => {
       category,
       // Outros campos do funcionário
     })
-    
+
     res.redirect("/employees")
   } catch (error) {
     console.error("Erro ao criar o funcionário:", error)
@@ -38,15 +38,13 @@ exports.getAllEmployees = async (req, res) => {
 exports.getEmployeeByCode = async (req, res) => {
   try {
     const { code } = req.params
-
     const employee = await Employee.findOne({
       where: { code },
     })
-    console.log('Empregado', employee)
     if (employee) {
-      res.render("editEmployee", { employee })
+      res.render("employee", { employee })
     } else {
-      res.render("editEmployee", { employee })
+      res.render("employee", { employee })
     }
   } catch (error) {
     console.error("Erro ao obter o funcionário:", error)
@@ -58,8 +56,7 @@ exports.getEmployeeByCode = async (req, res) => {
 exports.updateEmployee = async (req, res) => {
   try {
     const { code } = req.params
-
-    const { name, hoursWorked, shift, category } = req.body
+    const { hoursWorked, shift, category } = req.body
 
     const employee = await Employee.findOne({
       where: { code },
@@ -67,7 +64,6 @@ exports.updateEmployee = async (req, res) => {
 
     if (employee) {
       // Atualizar os campos necessários do funcionário
-      employee.name = name
       employee.hoursWorked = hoursWorked
       employee.shift = shift
       employee.category = category
@@ -93,7 +89,7 @@ exports.deleteEmployee = async (req, res) => {
 
     if (employee) {
       await employee.destroy()
-      res.redirect("/employees")
+      res.send("Funcionário excluído com sucesso")
     } else {
       res.status(404).send("Funcionário não encontrado")
     }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/register.css" />
+    <title>Atualizar Funcionário</title>
+  </head>
+  <body>
+    <!-- Incluindo a navbar -->
+    <%- include('partials/navbar') %>
+
+    <h1>Atualizar Funcionário</h1>
+    <form action="/employees/id/<%= employee.code %>" method="POST" class="container">
+      <label for="name">Nome:</label>
+      <input type="text" id="name" name="name" value="<%= employee.name %>" required />
+      <label for="hoursWorked">Horas trabalhadas:</label>
+      <input type="text" id="hoursWorked" name="hoursWorked" value="<%= employee.hoursWorked %>" required />
+
+      <label for="shift">Turno:</label>
+      <select id="shift" name="shift" required>
+        <option value="M" <%= employee.shift === 'M' ? 'selected' : '' %>>Manhã</option>
+        <option value="V" <%= employee.shift === 'V' ? 'selected' : '' %>>Tarde</option>
+        <option value="N" <%= employee.shift === 'N' ? 'selected' : '' %>>Noite</option>
+      </select>
+
+      <label for="category">Categoria:</label>
+      <select id="category" name="category" required>
+        <option value="G" <%= employee.category === 'G' ? 'selected' : '' %>>Gerente</option>
+        <option value="F" <%= employee.category === 'F' ? 'selected' : '' %>>Funcionário</option>
+      </select>
+
+      <input type="submit" value="Atualizar" />
+    </form>
+
+    
+  </body>
+</html>
