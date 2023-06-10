@@ -21,6 +21,7 @@ app.get('/', (req, res) => {
 const employeeRoutes = require('./routes/employeeRoutes');
 app.use('/employees', employeeRoutes);
 
+// rotas do salário mínimo
 const minimunwageRoutes = require('./routes/minimunwageRoutes');
 app.use('/minimunwage', minimunwageRoutes);
 

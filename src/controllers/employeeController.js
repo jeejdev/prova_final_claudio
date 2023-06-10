@@ -1,4 +1,5 @@
 const Employee = require("../models/employee")
+const MinimunWage = require("../models/minimunwage");
 
 // Criar um novo funcionário
 exports.createEmployee = async (req, res) => {
@@ -99,6 +100,49 @@ exports.deleteEmployee = async (req, res) => {
   }
 }
 
-exports.salary = async (req, res) => {
-  
-}
+exports.getSalaryEmployees = async (req, res) => {
+  try {
+    const employees = await Employee.findAll();
+    const minimumWage = await MinimunWage.findOne();
+
+    const salaryEmployees = employees.map((employee) => {
+      let salaryPercentage = 0;
+      let foodaid = 0;
+
+      if (employee.category === 'G') {
+        salaryPercentage = 0.04; // 4% do salário mínimo
+      } else if (employee.category === 'F' && employee.shift === 'N') {
+        salaryPercentage = 0.02; // 2% do salário mínimo
+      } else if (employee.category === 'F' && (employee.shift === 'M' || employee.shift === 'V')) {
+        salaryPercentage = 0.01; // 1% do salário mínimo
+      }
+
+      const salary = employee.hoursWorked * minimumWage.value * salaryPercentage;
+
+      if (salary <= 800) {
+        foodaid = salary * 0.25
+      } else if (salary > 800 && salary <= 1200){
+        foodaid = salary * 0.2
+      } else if (salary > 1200){
+        foodaid = salary * 0.15
+      }
+
+      return {
+        code: employee.code,
+        name: employee.name,
+        hoursWorked: employee.hoursWorked,
+        shift: employee.shift,
+        category: employee.category,
+        salaryPercentage: salaryPercentage,
+        foodaid: foodaid,
+        finalsalary: salary + foodaid,
+        salary: salary.toFixed(2), // Arredonda para 2 casas decimais
+      };
+    });
+
+    res.render('salaryemployee', { salaryEmployees });
+  } catch (error) {
+    console.error("Por favor, cadastre um salário mínimo para a sua região:", error);
+    res.redirect("/minimunwage")
+  }
+};

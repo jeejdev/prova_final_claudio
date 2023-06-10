@@ -2,23 +2,22 @@ const express = require("express")
 const router = express.Router()
 const minimumwageController = require("../controllers/minimumwageController")
 
-// Rota para exibir todos os funcionários
+// Rota para exibir o salário mínimo
 router.get("/", minimumwageController.getMinimunWage)
 
-// Rota para exibir um funcionário pelo código
-// router.get("/id/:id", minimumwageController.getMinimunWageByCode)
+// Rota para atualizar o salário mínimo
 router.get("/editMinimunWage/:id", minimumwageController.getEditMinimunWage);
 
 
-// Rota para atualizar um funcionário
+// Rota para atualizar o salário mínimo
 router.put("/editMinimunWage/id/:id", minimumwageController.updateMinimunWage);
 
-// Rota para entrar na página de um novo funcionário
+// Rota para cadastrar um novo salário mínimo
 router.get("/cadastroMinimunWage", (req, res, next) => {
   res.render("registerMinimunWage")
 })
 
-// Rota para criar um novo funcionário
+// Rota para criar um novo salário mínimo
 router.post("/cadastroMinimunWage", minimumwageController.createMinimunWage)
 
 module.exports = router

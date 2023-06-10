@@ -22,4 +22,8 @@ router.post("/cadastro", employeeController.createEmployee)
 // Rota para excluir um funcionário
 router.delete("/:code", employeeController.deleteEmployee)
 
+// Rota para carregar o salário dos funcionários
+router.get('/salaryemployee', employeeController.getSalaryEmployees);
+
+
 module.exports = router
