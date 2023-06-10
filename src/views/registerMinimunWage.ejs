@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/register.css" />
+    <title>Detalhes do Salário Mínimo</title>
+  </head>
+  <body>
+    <!-- Incluindo a navbar -->
+    <%- include('partials/navbar') %>
+
+    <h1>Cadastro do Salário Mínimo</h1>
+    <h3>Cada estado possui um salário mínimo, qual é este valor no seu?</h3>
+    <form action="/minimunwage/cadastroMinimunWage" method="POST" class="container">
+      <label for="value">Valor do salário mínimo:</label>
+      <input type="text" id="value" name="value" required />
+
+      <input type="submit" value="Cadastrar" />
+    </form>
+  </body>
+</html>

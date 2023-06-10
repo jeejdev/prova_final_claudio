@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/employees.css" />
+    <title>Salário Mínimo</title>
+  </head>
+  <body>
+    <!-- Incluindo a navbar -->
+    <%- include('partials/navbar') %>
+
+    <h1>Salário Mínimo</h1>
+
+    <% if (minimunwage.length > 0) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Valor</th>
+          <th colspan="1">Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% minimunwage.forEach((minimunwage) => { %>
+        <tr>
+          <td><%= minimunwage.value %></td>
+          <td><a href="/minimunwage/editMinimunWage?id=<%= minimunwage.id %>">Atualizar</a></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <% } else { %>
+    <p>Cadastre um salário mínimo para a sua região.</p>
+    <a href="/minimunwage/cadastroMinimunWage">Salário Mínimo</a>
+    <% } %>
+
+    <script>
+      // Adicione um evento de clique para cada botão "Atualizar"
+      const updateButtons = document.querySelectorAll('a[href^="/minimunwage/editMinimunWage?id="]');
+      updateButtons.forEach((button) => {
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          const productId = button.getAttribute('href').split('=')[1];
+          window.location.href = `/minimunwage/editMinimunWage/${productId}`;
+        });
+      });
+    </script>
+  </body>
+</html>

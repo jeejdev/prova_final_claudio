@@ -98,3 +98,7 @@ exports.deleteEmployee = async (req, res) => {
     res.status(500).send("Erro ao excluir o funcionário")
   }
 }
+
+exports.salary = async (req, res) => {
+  
+}

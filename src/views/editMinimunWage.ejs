@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/register.css" />
+    <title>Atualizar Salário Mínimo - ID <%= minimunwage.id %></title>
+  </head>
+  <body>
+    <!-- Incluindo a navbar -->
+    <%- include('partials/navbar') %>
+
+    <h1>Atualizar Salário Mínimo - ID <%= minimunwage.id %></h1>
+    <form class="container" id="updateMinimunWageForm" method="POST">
+      <label for="value">Valor:</label>
+      <input type="text" id="value" name="value" value="<%= minimunwage.value %>" required />
+
+      <input type="submit" value="Atualizar" />
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      const form = document.getElementById('updateMinimunWageForm');
+    
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+    
+        const id = '<%= minimunwage.id %>';
+        const value = document.getElementById('value').value;
+
+        const link = `/minimunwage/editMinimunWage/id/${id}`;
+
+        try {
+          await axios.put(link, {
+            value,
+          }, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          window.location.href = '/minimunwage';
+        } catch (error) {
+          // POR ALGUM MOTIVO MESMO AO REALIZAR A ATUALIZAÇÃO COM SUCESSO, ACESSANDO O ENDPOINT, ESTÁ VINDO PARA O FRONTEND COMO ERRO, ENTÃO ESTOU REDIRECIONANDO DE QUALQUER MANEIRA PARA A PÁGINA CORRETA.
+          console.error('Erro ao atualizar o salário mínimo:', error);
+          window.location.href = '/minimunwage';
+        }
+      });
+    </script>
+    
+  </body>
+</html>

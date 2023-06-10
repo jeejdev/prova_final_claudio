@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/employees.css" />
+    <title>Salário dos Funcionários</title>
+  </head>
+  <body>
+    <!-- Incluindo a navbar -->
+    <%- include('partials/navbar') %>
+
+    <h1>Detalhes dos salários dos Funcionários</h1>
+
+    <% if (employees.length > 0) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nome</th>
+          <th>Número de Horas Trabalhadas</th>
+          <th>Turno</th>
+          <th>Categoria</th>
+          <th>Salário</th>
+          <th colspan="2">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% employees.forEach((employee) => { %>
+        <tr>
+          <td><%= employee.code %></td>
+          <td><%= employee.name %></td>
+          <td><%= employee.hoursWorked %></td>
+          <td><%= employee.shift %></td>
+          <td><%= employee.category %></td>
+          <td><a href="employees/id/<%= employee.code %>">Visualizar conta</a></td>
+          <td><button class="delete-button" data-code="<%= employee.code %>">Excluir</button></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <% } else { %>
+    <p>Nenhum funcionário encontrado.</p>
+    <% } %>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const deleteButtons = document.querySelectorAll(".delete-button")
+
+        deleteButtons.forEach((button) => {
+          button.addEventListener("click", (event) => {
+            const code = event.target.dataset.code
+
+            if (confirm("Deseja excluir este funcionário?")) {
+              fetch(`/employees/${code}`, {
+                method: "DELETE",
+              })
+                .then((response) => {
+                  if (response.ok) {
+                    // Exclusão bem-sucedida, redirecionar para a página "/employees"
+                    window.location.href = "/employees"
+                  } else {
+                    // Exclusão retornou um status de erro, tratar a resposta conforme necessário
+                    console.error("Ocorreu um erro ao excluir o funcionário:", response.status)
+                  }
+                })
+                .catch((error) => {
+                  console.error("Ocorreu um erro ao excluir o funcionário:", error)
+                })
+            }
+          })
+        })
+      })
+    </script>
+  </body>
+</html>

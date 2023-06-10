@@ -21,6 +21,9 @@ app.get('/', (req, res) => {
 const employeeRoutes = require('./routes/employeeRoutes');
 app.use('/employees', employeeRoutes);
 
+const minimunwageRoutes = require('./routes/minimunwageRoutes');
+app.use('/minimunwage', minimunwageRoutes);
+
 // Inicialização do servidor
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
