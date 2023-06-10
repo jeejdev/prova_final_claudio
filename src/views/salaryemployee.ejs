@@ -4,37 +4,44 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" type="text/css" href="/css/navbar.css" />
     <link rel="stylesheet" type="text/css" href="/css/employees.css" />
-    <title>Salário dos Funcionários</title>
+    <title>Detalhes dos Salários dos Funcionários</title>
   </head>
   <body>
     <!-- Incluindo a navbar -->
     <%- include('partials/navbar') %>
 
-    <h1>Detalhes dos salários dos Funcionários</h1>
+    <h1>Detalhes dos Salários dos Funcionários</h1>
 
-    <% if (employees.length > 0) { %>
+    <% if (salaryEmployees.length > 0) { %>
     <table>
       <thead>
         <tr>
           <th>Código</th>
           <th>Nome</th>
           <th>Número de Horas Trabalhadas</th>
+          <th>Valor da hora trabalhada</th>
           <th>Turno</th>
           <th>Categoria</th>
-          <th>Salário</th>
-          <th colspan="2">Ações</th>
+          <th>Salário Inicial</th>
+          <th>Auxílio Alimentação</th>
+          <th>Salário Final</th>
+          <!-- <th colspan="2">Ações</th> -->
         </tr>
       </thead>
       <tbody>
-        <% employees.forEach((employee) => { %>
+        <% salaryEmployees.forEach((salaryEmployee) => { %>
         <tr>
-          <td><%= employee.code %></td>
-          <td><%= employee.name %></td>
-          <td><%= employee.hoursWorked %></td>
-          <td><%= employee.shift %></td>
-          <td><%= employee.category %></td>
-          <td><a href="employees/id/<%= employee.code %>">Visualizar conta</a></td>
-          <td><button class="delete-button" data-code="<%= employee.code %>">Excluir</button></td>
+          <td><%= salaryEmployee.code %></td>
+          <td><%= salaryEmployee.name %></td>
+          <td><%= salaryEmployee.hoursWorked %></td>
+          <td><%= salaryEmployee.salaryPercentage %></td>
+          <td><%= salaryEmployee.shift %></td>
+          <td><%= salaryEmployee.category %></td>
+          <td>R$ <%= salaryEmployee.salary %></td>
+          <td>R$ <%= salaryEmployee.foodaid %></td>
+          <td>R$ <%= salaryEmployee.finalsalary %></td>
+          <!-- <td><a href="/employees/id/<%= salaryEmployee.code %>">Atualizar</a></td>
+          <td><button class="delete-button" data-code="<%= salaryEmployee.code %>">Excluir</button></td> -->
         </tr>
         <% }) %>
       </tbody>

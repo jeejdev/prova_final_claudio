@@ -1,6 +1,6 @@
 const MinimunWage = require("../models/minimunwage")
 
-// Criar um novo funcionário
+// Criar um novo salário mínimo
 exports.createMinimunWage = async (req, res) => {
   try {
     const { value } = req.body
@@ -66,5 +66,3 @@ exports.getEditMinimunWage = async (req, res) => {
     res.status(500).send("Erro ao obter o salário mínimo");
   }
 };
-
-//OBS CADA HORA TRABALHADA É AQUELA PORCENTAGEM DO SALÁRIO MÍNIMO
