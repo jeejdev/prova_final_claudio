@@ -5,7 +5,7 @@ const createDatabase = async () => {
   const connection = await mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "123456",
+    password: "fatec",
   })
 
   await connection.query("CREATE DATABASE IF NOT EXISTS claudio_hotel")
@@ -22,7 +22,7 @@ const sequelize = new Sequelize({
   host: "localhost",
   port: 3306,
   username: "root",
-  password: "123456",
+  password: "fatec",
   database: "claudio_hotel",
   define: {
     timestamps: true,
